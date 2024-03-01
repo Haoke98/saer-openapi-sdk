@@ -1,6 +1,6 @@
 # saer-openapi-sdk
 
-A python api sdk for (http://api.isaerdata.com/)
+A python sdk for [SAER-OPENAPI](http://api.isaerdata.com/)
 
 ## API
 
@@ -11,3 +11,59 @@ A python api sdk for (http://api.isaerdata.com/)
 * [x] 专利数据
     * [x] DSL检索
     * [ ] 详情信息接口
+
+## Use
+
+1. Install
+    ```shell
+    pip install saer-openapi
+    ```
+2. 引入并初始化:
+    ```python
+    from saer import Saer
+   api = Saer("<client_id>","<client_key>")
+    ```
+3. DSL检索市场主题数据:
+    ```python
+    api.all("策勒县路通二手车评估交易有限公司")
+    api.detail("新疆数字化交易软件有限公司", "1", "A1")    
+    ```
+4. DSL检索专利数据:
+    ```python
+    query_str = "助听器"
+    resp = searObj.patent_search(
+        {
+            "must": [
+                {
+                    # "children__patent__patname": {"any": ["眼睛"]},
+                    # "children__patent__patname": {"any": ["听力仪器", "直插式电感"]}
+                    # "children__patent__zqx": {"any": ["眼睛", "直插式电感"]}
+                    # "children__patent__gkggr": {"range": ["2023-12-01", "2024-01-30"]}
+                    # "children__patent__zflh": {"any": ["A", "B", "C", "D", "E", "F", "G", "H"]}
+                }
+            ],
+            "should": [
+                {
+                    "children__patent__sqh": {"any": [query_str]},
+                    "children__patent__zqx": {"any": [query_str]},
+                    "children__patent__patname": {"any": [query_str]},
+                    "children__patent__zflh": {"any": [query_str]}
+                }
+            ]
+        },
+        {
+            "gkggr": {"order": "desc"}
+        },
+        "2",
+        "10",
+        v_show=False)
+    result = resp.json()["result"]
+    print(resp.json()["ordernum"])
+    total = result["total"]
+    print("Total:", total)
+    dataList = result["datalist"]
+    for i, data in enumerate(dataList, start=1):
+        gkggh = data.get("gkggh")
+        gkggr = data.get("gkggr")
+        print(i, "/", len(dataList), "|", gkggr, gkggh, data)
+    ```
