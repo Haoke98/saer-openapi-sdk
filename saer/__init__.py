@@ -25,22 +25,22 @@ class Saer:
 
     def gen_auth_token(self, client_id, client_key, v_show: bool = False):
         unix_timestamp = int(time.time())
-        raw_string = f"{client_id}-{unix_timestamp}-{client_key}"
+        raw_string = "{}-{}-{}".format(client_id, unix_timestamp, client_key)
         md5_hash = hashlib.md5(raw_string.encode('utf-8'))
         md5_hex = md5_hash.hexdigest()
         if v_show:
-            print(f'AUTHORIZATION,string,true,{md5_hex.upper()},Md5(clientid-Timespan-clientkey)')
-            print(f"TIMESPAN,string,true,{unix_timestamp},Unix时间戳")
-            print(f"CLIENTID,string,true,{client_id},Clientid(个人中心可以查看)")
+            print('AUTHORIZATION,string,true,{},Md5(clientid-Timespan-clientkey)'.format(md5_hex.upper()))
+            print("TIMESPAN,string,true,{},Unix时间戳".format(unix_timestamp))
+            print("CLIENTID,string,true,{},Clientid(个人中心可以查看)".format(client_id))
             print("----------------------------------")
-            print(f'AUTHORIZATION,{md5_hex.upper()}')
-            print(f"TIMESPAN,{unix_timestamp}")
-            print(f"CLIENTID,{client_id}")
+            print('AUTHORIZATION:{}'.format(md5_hex.upper()))
+            print("TIMESPAN:{}".format(unix_timestamp))
+            print("CLIENTID:{}".format(client_id))
         return md5_hex.upper(), unix_timestamp
 
     def __post__(self, url, data, v_show: bool = True):
         token, timespan = self.gen_auth_token(self.client_id, self.client_key)
-        resp = requests.post(url=f"{self.base_url}{url}", headers={
+        resp = requests.post(url="{}{}".format(self.base_url, url), headers={
             "AUTHORIZATION": token,
             "TIMESPAN": str(timespan),
             "CLIENTID": self.client_id,

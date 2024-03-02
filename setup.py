@@ -21,7 +21,6 @@ long_description = open('README.md').read()
 
 setup(
     name='saer-openapi',
-    version='1.0.0',
     url='https://github.com/Haoke98/saer-openapi-sdk',
     author='Haoke98',
     author_email='Haoke98@outlook.com',
@@ -30,7 +29,6 @@ setup(
     packages=["saer"],
     install_requires=["requests~=2.31.0"],
     include_package_data=True,
-    python_requires='>=3.7',
     long_description=long_description,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
