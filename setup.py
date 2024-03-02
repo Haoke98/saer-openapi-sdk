@@ -22,9 +22,6 @@ long_description = open('README.md').read()
 setup(
     name='saer-openapi',
     url='https://github.com/Haoke98/saer-openapi-sdk',
-    author='Haoke98',
-    author_email='Haoke98@outlook.com',
-    license='Apache2.0',
     description='https://github.com/Haoke98/saer-openapi-sdk',
     packages=["saer"],
     include_package_data=True,
