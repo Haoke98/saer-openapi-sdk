@@ -27,7 +27,6 @@ setup(
     license='Apache2.0',
     description='https://github.com/Haoke98/saer-openapi-sdk',
     packages=["saer"],
-    install_requires=["requests~=2.31.0"],
     include_package_data=True,
     long_description=long_description,
     classifiers=[
