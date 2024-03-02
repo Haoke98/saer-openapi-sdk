@@ -17,7 +17,6 @@ try:
 except ImportError:
     from distutils.core import setup
 
-long_description = open('README.md').read()
 
 setup(
     name='saer-openapi',
@@ -25,8 +24,6 @@ setup(
     description='https://github.com/Haoke98/saer-openapi-sdk',
     packages=["saer"],
     include_package_data=True,
-    long_description=long_description,
-    keywords=['saer', 'openapi', 'api', 'sdk', 'python-sdk', "api.isaerdata.com"],
     entry_points={
         'console_scripts': [
 
