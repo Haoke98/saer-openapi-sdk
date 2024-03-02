@@ -10,7 +10,7 @@ A python sdk for [SAER-OPENAPI](http://api.isaerdata.com/)
     * [x] 获取联系方式
 * [x] 专利数据
     * [x] DSL检索
-    * [ ] 详情信息接口
+    * [X] 详情信息接口
 
 ## Use
 
@@ -66,4 +66,8 @@ A python sdk for [SAER-OPENAPI](http://api.isaerdata.com/)
         gkggh = data.get("gkggh")
         gkggr = data.get("gkggr")
         print(i, "/", len(dataList), "|", gkggr, gkggh, data)
+    ```
+5. 专利详情接口:
+    ```python
+    api.patent_detail("7c93aaf306ae966dcb2baa13e27d9b6e")
     ```

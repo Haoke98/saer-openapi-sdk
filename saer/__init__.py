@@ -40,21 +40,27 @@ class Saer:
 
     def __post__(self, url, data, v_show: bool = True):
         token, timespan = self.gen_auth_token(self.client_id, self.client_key)
-        resp = requests.post(url="{}{}".format(self.base_url, url), headers={
+        _headers = {
             "AUTHORIZATION": token,
             "TIMESPAN": str(timespan),
             "CLIENTID": self.client_id,
-        }, data=data)
-        print("RESPONSE", resp)
+        }
+        final_url = "{}{}".format(self.base_url, url)
+        if v_show:
+            print("URL:{}".format(final_url))
+            print("Headers:", json.dumps(_headers, ensure_ascii=False, indent=4))
+            print("Data:", json.dumps(data, ensure_ascii=False, indent=4))
+        resp = requests.post(url=final_url, headers=_headers, data=data)
+        if v_show:
+            print("Response:", resp)
         respDict = resp.json()
         code = respDict["code"]
         if code == "200":
             if v_show:
-                print(json.dumps(respDict["result"], ensure_ascii=False, indent=5))
-            # return respDict["result"]
+                print("ResponseDict:", json.dumps(respDict, ensure_ascii=False, indent=4), respDict)
+            pass
         else:
-            if v_show:
-                print(code, respDict["message"])
+            print("ResponseDict:", json.dumps(respDict, ensure_ascii=False, indent=4))
         return resp
 
     def detail(self, key: str, key_type: str, version):
@@ -112,3 +118,9 @@ class Saer:
         }
         qdata = {"data": json.dumps(data, ensure_ascii=False)}
         return self.__post__(url="/common/patent_search/", data=qdata, v_show=v_show)
+
+    def patent_detail(self, mid: str, v_show=True):
+        data = {
+            "mid": mid
+        }
+        return self.__post__(url="/common/patent_details/", data=data, v_show=v_show)
