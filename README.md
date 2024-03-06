@@ -71,3 +71,8 @@ A python sdk for [SAER-OPENAPI](http://api.isaerdata.com/)
     ```python
     api.patent_detail("7c93aaf306ae966dcb2baa13e27d9b6e")
     ```
+
+## 开发计划
+
+* [ ] 控制台日志输出从直接使用`print`改成标准的日志工具库`logging`
+* [ ] 开发`saer-cli`控制台Devtool工具

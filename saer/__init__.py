@@ -85,6 +85,7 @@ class Saer:
     def contact(self, key: str, key_type: str, ltype=None, v_show: bool = False):
         """
 
+        :param v_show: 控制台打印日志
         :param key:搜索关键字
         :param key_type:搜索关键字类型（"0"：企业唯一标识；"1"：企业名称；"2"：统一社会信用代码；"3"：注册号），若为"0"该参数可不传
         :param ltype:("1", "手机"), ("2", "座机"), ("3", "邮箱")
@@ -95,7 +96,7 @@ class Saer:
         }
         if ltype is not None:
             qdata.setdefault("ltype", ltype)
-        resp = self.__post__("/common/company_lianxi_public/", data=qdata)
+        resp = self.__post__("/common/company_lianxi_public/", data=qdata, v_show=v_show)
         return resp
 
     def all(self, company_name: str):
