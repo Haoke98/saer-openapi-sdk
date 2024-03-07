@@ -8,6 +8,7 @@
 ======================================="""
 import hashlib
 import json
+import logging
 import time
 
 import requests
@@ -53,15 +54,30 @@ class Saer:
         resp = requests.post(url=final_url, headers=_headers, data=data)
         if v_show:
             print("Response:", resp)
-        respDict = resp.json()
-        code = respDict["code"]
-        if code == "200":
-            if v_show:
-                print("ResponseDict:", json.dumps(respDict, ensure_ascii=False, indent=4), respDict)
-            pass
-        else:
-            print("ResponseDict:", json.dumps(respDict, ensure_ascii=False, indent=4))
-        return resp
+        try:
+            if resp.status_code == 200:
+                respDict = resp.json()
+                code = respDict["code"]
+                if code == "200":
+                    if v_show:
+                        print("ResponseDict:", json.dumps(respDict, ensure_ascii=False, indent=4), respDict)
+                    pass
+                else:
+                    logging.warning("URL:%s\nHEADERS:%s\nDATA:%s\nRESP:%s",
+                                 final_url,
+                                 json.dumps(_headers, ensure_ascii=False, indent=4),
+                                 json.dumps(data, ensure_ascii=False, indent=4),
+                                 json.dumps(respDict, ensure_ascii=False, indent=4)
+                                 )
+            return resp
+        except Exception as e:
+            logging.error("URL:%s\nHEADERS:%s\nDATA:%s\nRESP:%s",
+                          final_url,
+                          json.dumps(_headers, ensure_ascii=False, indent=4),
+                          json.dumps(data, ensure_ascii=False, indent=4),
+                          resp, exc_info=True
+                          )
+            return resp
 
     def detail(self, key: str, key_type: str, version):
         qdata = {
