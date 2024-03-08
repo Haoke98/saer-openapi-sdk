@@ -76,3 +76,10 @@ A python sdk for [SAER-OPENAPI](http://api.isaerdata.com/)
 
 * [ ] 控制台日志输出从直接使用`print`改成标准的日志工具库`logging`
 * [ ] 开发`saer-cli`控制台Devtool工具
+
+## 接口研究🧐&常见问题反馈
+
+* QueryDSL 中加用IPC分类过滤和不加过滤时的数量区别
+    以下DSL其实已经包含了所有IPC大分类 `{"children__patent__zflh": {"any": ["A", "B", "C", "D", "E", "F", "G", "H"]}},`
+    但最终还是出现了插曲(如下图所示, 图中橙色线是不加IPC分类过滤,只加公开日期过滤的结果,而红线是加了公开日起和IPC分类过滤的结果)
+    ![](assets/chart.png)
