@@ -64,11 +64,11 @@ class Saer:
                     pass
                 else:
                     logging.warning("URL:%s\nHEADERS:%s\nDATA:%s\nRESP:%s",
-                                 final_url,
-                                 json.dumps(_headers, ensure_ascii=False, indent=4),
-                                 json.dumps(data, ensure_ascii=False, indent=4),
-                                 json.dumps(respDict, ensure_ascii=False, indent=4)
-                                 )
+                                    final_url,
+                                    json.dumps(_headers, ensure_ascii=False, indent=4),
+                                    json.dumps(data, ensure_ascii=False, indent=4),
+                                    json.dumps(respDict, ensure_ascii=False, indent=4)
+                                    )
             return resp
         except Exception as e:
             logging.error("URL:%s\nHEADERS:%s\nDATA:%s\nRESP:%s",
@@ -127,6 +127,20 @@ class Saer:
         self.contact(company_name, "1")
 
     def patent_search(self, dsl_query, sort, page_index: str = "1", page_size: str = "20", v_show=True):
+        """
+
+        :param dsl_query: like {"children__patent__zflh": {"any": ["H01F1/42", "H01F1/49"]}}
+            lte and gte: {"children__patent__gkggr": {"range": ["1999-04-06", "1999-04-07"]}}
+            lte:  {"children__patent__gkggr": {"range": [None, "1999-04-07"]}}
+            gte:  {"children__patent__gkggr": {"range": ["1999-04-07",None ]}}
+        :param sort: like {"gkggr": {"order": "desc"}}.
+        :param page_index:
+        :param page_size: default is 20, range is [1~300].
+        :param v_show:
+        :return:
+
+        lte
+        """
         data = {
             "dsl_query": dsl_query,
             "sort": sort,
